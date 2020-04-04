@@ -3,6 +3,7 @@ import React from 'react'
 import { makeStyles, Grid, TextField, Typography, Button } from '@material-ui/core'
 import Facebook from '@material-ui/icons/Facebook'
 import GTranslate from '@material-ui/icons/GTranslate'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -17,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     },
     btnSocials: {
         margin: theme.spacing(1),
+    },
+    link: {
+        textDecoration: 'none'
     }
 }))
 
@@ -37,7 +41,9 @@ const Login = () => {
                 <Button variant='contained' color='primary'>Entrar</Button>
             </Grid>
             <Grid item md={12} xs={12}>
-                <Typography variant='h6'>Aún no tienes cuenta? crea uno aquí</Typography>
+                <Typography variant='h6'>Aún no tienes cuenta? crea uno 
+                    <Link to='/register' className={styles.link}> aquí </Link>
+                </Typography>
             </Grid>
             <Grid item md={12} xs={12}>
                 <Typography variant='h6'>O puedes:</Typography>

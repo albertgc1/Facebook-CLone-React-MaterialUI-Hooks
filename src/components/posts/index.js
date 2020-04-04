@@ -4,6 +4,8 @@ import Post from './post'
 const Posts = () => {
     return (
         <>
+        <p>asd</p>
+        <Post />
         <Post />
         </>
     )

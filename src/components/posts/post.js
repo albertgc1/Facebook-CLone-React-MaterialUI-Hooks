@@ -12,8 +12,9 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: 345,
-      margin: '70px auto'
+      maxWidth: 422,
+      minWidth: 280,
+      margin: '10px auto'
     },
     media: {
       height: 0,
@@ -43,7 +44,8 @@ const Post = () => {
         setExpanded(!expanded)
     }
 
-    return (
+  return (
+    <>
     <Card className={classes.root}>
       <CardHeader
         avatar={
@@ -107,7 +109,8 @@ const Post = () => {
         </CardContent>
       </Collapse>
     </Card>
-    )
+    </>
+  )
 }
  
 export default Post

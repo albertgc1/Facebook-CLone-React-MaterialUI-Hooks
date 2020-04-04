@@ -3,7 +3,7 @@ import Register from './register'
 import Login from './login'
 
 const Auth = (props) => {
-    console.log(props.match.path)
+
     return (
         <>
             { (props.match.path === '/register') &&

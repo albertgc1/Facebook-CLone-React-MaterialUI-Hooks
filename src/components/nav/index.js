@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import { AppBar, Toolbar, Typography, Button, Avatar } from '@material-ui/core'
@@ -17,8 +18,12 @@ const Nav = (props) => {
     return (
         <AppBar className={styles.root}>
             <Toolbar position='static' >
-                <Typography className={styles.title}>InstaGC</Typography>
-                <Button color='inherit'>Login</Button>
+                <Typography className={styles.title}>
+                    <Link to='/' className='link'>InstaGC</Link>
+                </Typography>
+                <Button color='inherit'>
+                    <Link to='/login' className='link'>Login</Link>
+                </Button>
                 { props.user && 
                     <Avatar alt='user-default' src='https://www.french-weekendbreaks.co.uk/sites/uk.picardiev3/themes/picardiev3/img_v2/user-default.jpg' />
                 }
