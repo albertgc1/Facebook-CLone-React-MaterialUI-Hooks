@@ -5,7 +5,7 @@ import { makeStyles, Grid, TextField, Typography, Button } from '@material-ui/co
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: '90%',
-        margin: '70px auto',
+        margin: '0 auto',
         textAlign: 'center',
     },
     btnEnter: {

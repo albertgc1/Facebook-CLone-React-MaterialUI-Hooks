@@ -7,21 +7,24 @@ import EditIcon from '@material-ui/icons/Edit';
 const useStyles = makeStyles((theme) => ({
   root: {
     '& > *': {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
+      position: 'fixed',
+      top: '88%'
     },
   },
   button: {
-    left: '80%'
+    left: '58%',
+    top: '86%'
   }
 }));
 
-const FloatingButton = () => {
+const FloatingButton = ({ handleClickOpen }) => {
 
   const classes = useStyles();
 
   return (
     <div className={classes.root}>
-      <Fab className={classes.button} color="secondary" aria-label="edit">
+      <Fab onClick={handleClickOpen} className={classes.button} color="secondary" aria-label="edit">
         <EditIcon />
       </Fab>
     </div>

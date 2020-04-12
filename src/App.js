@@ -1,30 +1,31 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { BrowserRouter, Route, Redirect } from 'react-router-dom'
+import { Context } from './server/Context'
 
 import Nav from './components/nav'
 import Auth from './components/auth'
-import Posts from './components/posts'
+import Home from './components/Home'
 
-const auth = true
+const App = () => {
 
-function App() {
+  const { userAuth } = useContext(Context)
+
   return (
     <>
       <BrowserRouter>
-        <Nav />
+        <Nav user={ userAuth }/>
 
-        { auth
-          ? <Route path='/' exact component={ Posts } />
+        { userAuth
+          ? <Route path='/' exact component={ Home } />
           : <Redirect path='/' to='/login' />
         }
 
-        { !auth &&
+        { !userAuth &&
         <>
           <Route path='/login' component={ Auth } />
           <Route path='/register' component={ Auth } />
         </>
         }
-
       </BrowserRouter>
     </>
   )

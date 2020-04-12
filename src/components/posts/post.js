@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { URL } from '../../server/GLOBAL'
 
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
@@ -6,15 +7,16 @@ import { Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar
 import { red } from '@material-ui/core/colors';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 422,
       minWidth: 280,
-      margin: '10px auto'
+      width: 400,
+      marginBottom: 14
     },
     media: {
       height: 0,
@@ -35,51 +37,55 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Post = () => {
+const Post = (props) => {
 
-    const classes = useStyles()
-    const [expanded, setExpanded] = useState(false);
+  const classes = useStyles()
+  const [expanded, setExpanded] = useState(false);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded)
-    }
+  const handleExpandClick = () => {
+      setExpanded(!expanded)
+  }
+
+  const { post } = props
 
   return (
     <>
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
-            R
-          </Avatar>
+          <>
+            { post.userAvatar
+              ? <Avatar src={`${URL}/img/${post.userAvatar}`} className={classes.avatar} />
+              : <Avatar aria-label="recipe" className={classes.avatar}>{(post.user).substr(0,1)}</Avatar>
+            }
+          </>
         }
         action={
           <IconButton aria-label="settings">
             <MoreVertIcon />
           </IconButton>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="September 14, 2016"
+        title={ post.user }
+        subheader={ post.created_at }
       />
       <CardMedia
         className={classes.media}
-        image="https://concepto.de/wp-content/uploads/2015/03/paisaje-e1549600034372.jpg"
+        image={ `${URL}/img/${post.photo}` }
         title="Paella dish"
       />
       <CardContent>
         <Typography variant="body2" color="textSecondary" component="p">
-          This impressive paella is a perfect party dish and a fun meal to cook together with your
-          guests. Add 1 cup of frozen peas along with the mussels, if you like.
+          { post.post }
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
+          { post.like
+            ? <FavoriteIcon />
+            : <FavoriteBorderIcon />
+          }
         </IconButton>
-        <Typography>8</Typography>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
+        <Typography>{ post.likes }</Typography>
         <IconButton
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
@@ -88,7 +94,7 @@ const Post = () => {
           aria-expanded={expanded}
           aria-label="show more"
         >
-          <Typography>4 comentarios</Typography>
+          <Typography>{ post.comments } comentarios</Typography>
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
