@@ -1,5 +1,5 @@
 import React from 'react'
-//import Posts from './posts'
+import Posts from './posts'
 import Profile from './user'
 import Search from './search'
 
@@ -31,7 +31,7 @@ const Home = () => {
     return (
         <div className={classes.root}>
             <div className={classes.posts}>
-                
+                <Posts />
             </div>
             <div className={classes.profile}>
                 <Profile />

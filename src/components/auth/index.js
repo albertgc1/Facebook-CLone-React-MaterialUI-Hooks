@@ -34,7 +34,7 @@ const Auth = (props) => {
 
     return (
         <>
-            <div style={{ marginTop: '57px' }}></div>
+            <div style={{ marginTop: '67px' }}></div>
             { loading && <LinearProgress color="secondary" /> }
             { (props.match.path === '/register') &&
                 <Register register={ register } />

@@ -1,18 +1,23 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Post from './post'
 import CratePost from './create'
 import FloatingButton from '../FloatingB/index'
 import { getPosts } from '../../containers/post.container'
+import { Context } from '../../server/Context'
+import PostLoad from '../partials/postLoad'
 
 const Posts = () => {
 
+    const { token } = useContext(Context)
     const [ posts, setPosts ] = useState([])
     const [open, setOpen] = useState(false)
+    const [ load, setLoad ] = useState(true)
 
     useEffect(() => {
-        getPosts()
+        getPosts(token)
             .then(res => {
                 setPosts(res.data.data)
+                setLoad(false)
             })
             .catch(e => console.log(e))
     }, [])
@@ -24,6 +29,10 @@ const Posts = () => {
     const handleClose = () => {
         setOpen(false)
     };
+
+    if(load){
+        return <><br/><br/><PostLoad /><PostLoad /><PostLoad /></>
+    }
 
     return (
         <>
