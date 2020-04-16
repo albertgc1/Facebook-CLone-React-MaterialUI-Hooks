@@ -1,49 +1,68 @@
 import React, { useEffect, useState, useContext } from 'react'
 import Post from './post'
-import CratePost from './create'
-import FloatingButton from '../FloatingB/index'
-import { getPosts } from '../../containers/post.container'
+import { getPosts, uploadImage, savePost } from '../../containers/post.container'
 import { Context } from '../../server/Context'
 import PostLoad from '../partials/postLoad'
+import FormCreate from './formCreate'
 
 const Posts = () => {
 
     const { token } = useContext(Context)
     const [ posts, setPosts ] = useState([])
-    const [open, setOpen] = useState(false)
-    const [ load, setLoad ] = useState(true)
+    const [ load, setLoad ] = useState(false)
+    const [ photo, setPhoto ] = useState('')
+    const [ description, setDes ] = useState('')
+    const [ loadImage, setLoadImage ] = useState(false)
 
     useEffect(() => {
+        fetchPosts()
+    }, [])
+
+    const fetchPosts = () => {
         getPosts(token)
             .then(res => {
                 setPosts(res.data.data)
                 setLoad(false)
             })
             .catch(e => console.log(e))
-    }, [])
+    }
 
-    const handleClickOpen = () => {
-        setOpen(true)
-    };
+    const storeImage = (img) => {
+        setLoadImage(true)
+        let data = new FormData()
+        data.append('photo', img)
+        uploadImage(token, data)
+            .then(res => {
+                setPhoto(res.data)
+                setLoadImage(false)
+            })
+            .catch(e => console.log(e))
+    }
 
-    const handleClose = () => {
-        setOpen(false)
-    };
+    const storePost = () => {
+        let post = { description, photo }
+        savePost(post, token)
+            .then(res => {
+                fetchPosts()
+                setPhoto('')
+                setDes('')
+            })
+            .catch(e => console.log(e))
+    }
 
     if(load){
-        return <><br/><br/><PostLoad /><PostLoad /><PostLoad /></>
+        return <><PostLoad /><PostLoad /><PostLoad /></>
     }
 
     return (
         <>
         <br/><br/>
+        <FormCreate storeImage={storeImage} photo={photo} loadImage={loadImage} storePost={storePost} setDes={setDes} description={description} />
         {
             posts.map(post => (
                 <Post key={post.id} post={post} />
             ))
         }
-        <FloatingButton handleClickOpen={handleClickOpen} />
-        <CratePost handleClose={handleClose} open={open} />
         </>
     )
 }

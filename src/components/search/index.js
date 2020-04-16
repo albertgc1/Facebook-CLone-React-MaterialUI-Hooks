@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 import CardSearch from './card'
 import { search } from '../../containers/post.container'
 
@@ -11,10 +11,7 @@ const Search = () => {
         search(query)
             .then(res => setResults(res.data))
             .catch(e => console.log(e))
-
     }, [query])
-
-    console.log(query)
 
     return (
         <CardSearch results={results} setQuery={setQuery} />
