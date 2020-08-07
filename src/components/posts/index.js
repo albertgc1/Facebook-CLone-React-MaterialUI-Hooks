@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import Post from './post'
-import { getPosts, uploadImage, savePost } from '../../containers/post.container'
+import { getPosts, uploadImage, savePost, setLike, getCommentsPost } from '../../containers/post.container'
 import { Context } from '../../server/Context'
 import PostLoad from '../partials/postLoad'
 import FormCreate from './formCreate'
@@ -13,6 +13,8 @@ const Posts = () => {
     const [ photo, setPhoto ] = useState('')
     const [ description, setDes ] = useState('')
     const [ loadImage, setLoadImage ] = useState(false)
+    const [ comments, setComments ] = useState([])
+    const [ loadComments, setLoadComments ] = useState(false)
 
     useEffect(() => {
         fetchPosts()
@@ -50,6 +52,15 @@ const Posts = () => {
             .catch(e => console.log(e))
     }
 
+    const like = postId => {
+        setLike(postId, token).then(() => fetchPosts())
+    }
+
+    const getComments = postId => {
+        setLoadComments(true)
+        getCommentsPost(postId, token).then(res => {setComments(res.data.data); setLoadComments(false)})
+    }
+
     if(load){
         return <><PostLoad /><PostLoad /><PostLoad /></>
     }
@@ -60,7 +71,7 @@ const Posts = () => {
         <FormCreate storeImage={storeImage} photo={photo} loadImage={loadImage} storePost={storePost} setDes={setDes} description={description} />
         {
             posts.map(post => (
-                <Post key={post.id} post={post} />
+                <Post key={post.id} post={post} like={like} comments={comments} getComments={getComments} loadComments={loadComments} />
             ))
         }
         </>

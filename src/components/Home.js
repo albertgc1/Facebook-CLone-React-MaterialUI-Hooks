@@ -6,13 +6,9 @@ import Search from './search'
 import { makeStyles } from '@material-ui/core/styles'
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '80%',
-      margin: '40px auto'
-    },
     posts: {
-        width: 400,
-        margin: '0 auto'
+        minWidth: 320,
+        width: 405
     },
     profile: {
         position: 'fixed',
@@ -29,14 +25,14 @@ const useStyles = makeStyles((theme) => ({
 const Home = () => {
     const classes = useStyles()
     return (
-        <div className={classes.root}>
-            <div className={classes.posts}>
+        <div className='container'>
+            <div className={`${classes.posts} card-posts`}>
                 <Posts />
             </div>
-            <div className={classes.profile}>
+            <div className={`${classes.profile} card-user`}>
                 <Profile />
             </div>
-            <div className={classes.search}>
+            <div className={`${classes.search} card-search`}>
                 <Search />
             </div>
         </div>

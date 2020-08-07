@@ -14,6 +14,14 @@ export const search = (query) => {
     else return axios.get(`${URL}/search`)
 }
 
+export const setLike = (id, token) => {
+    return axios.post(`${URL}/posts/like`, { post_id: id }, {headers: {'Authorization': `Bearer ${token}`}})
+}
+
+export const getCommentsPost = (id, token) => {
+    return axios.get(`${URL}/posts/${id}`, {headers: {'Authorization': `Bearer ${token}`}})
+}
+
 export const uploadImage = (token, data) => {
     return axios.post(
         `${URL}/posts/photo`, 

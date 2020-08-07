@@ -28,7 +28,7 @@ const Nav = (props) => {
     return (
         <AppBar className={styles.root}>
             <Toolbar position='static' >
-                <Typography className={styles.title}>
+                <Typography className={`${styles.title} title-nav`}>
                     <Link to='/' className='link'>InstaGC</Link>
                 </Typography>
                 <div className={styles.data}>
@@ -39,10 +39,7 @@ const Nav = (props) => {
                 }
                 </div>
                 { props.user && 
-                <div className={styles.data}>
-                    <Typography className={styles.menu}>Estados</Typography>
-                    <Typography className={styles.menu}>Publicaciones</Typography>
-                    <Typography className={styles.menu}>Explorar</Typography>
+                <div className={`${styles.data} nav-user`}>
                     <Typography style={{marginRight: 5, marginLeft: 20}}>{props.user.name}</Typography>
                     <Avatar alt='user-default' src={`${URL}/img/${props.user.avatar}`} />
                 </div>

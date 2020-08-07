@@ -1,18 +1,27 @@
 import React from 'react'
 import { URL } from '../../server/GLOBAL'
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Avatar from '@material-ui/core/Avatar';
+import Badge from '@material-ui/core/Badge';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+
+const AddAPhotoIcon = withStyles((theme) => ({
+  root: {
+    width: 22,
+    height: 22,
+    border: `2px solid ${theme.palette.background.paper}`,
+  },
+}))(Avatar);
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
-  }
+  },
 }));
 
 const CardProfile = ({ user }) => {
@@ -46,7 +55,16 @@ const CardProfile = ({ user }) => {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Avatar alt={user.name} src={`${URL}/img/${user.avatar}`} className={classes.large} />
+        <Badge
+          overlap="circle"
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          badgeContent={<AddAPhotoIcon />}
+        >
+          <Avatar alt={user.name} src={`${URL}/img/${user.avatar}`} className={classes.large} />
+        </Badge>
         <Typography variant="h6" component="h2" style={{textAlign: 'center'}}>
           { user.name } { user.last_name }
         </Typography>

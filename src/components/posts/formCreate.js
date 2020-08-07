@@ -7,8 +7,8 @@ import { Card, TextField, CardActions, Button, Typography, CircularProgress  } f
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 422,
-      minWidth: 280,
-      width: 400,
+      minWidth: 200,
+      
       marginBottom: 14,
     },
     form: {

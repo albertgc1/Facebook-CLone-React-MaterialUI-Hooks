@@ -3,19 +3,21 @@ import { URL } from '../../server/GLOBAL'
 
 import { makeStyles } from '@material-ui/core/styles'
 import clsx from 'clsx'
-import { Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton } from '@material-ui/core'
+import { Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, Typography, IconButton, List } from '@material-ui/core'
 import { red } from '@material-ui/core/colors';
 
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Comment from './comments'
+import ListLoad from '../partials/listLoader'
 
 const useStyles = makeStyles((theme) => ({
     root: {
       maxWidth: 422,
       minWidth: 280,
-      width: 400,
+      
       marginBottom: 14
     },
     media: {
@@ -35,18 +37,20 @@ const useStyles = makeStyles((theme) => ({
     avatar: {
       backgroundColor: red[500],
     },
+    demo: {
+      backgroundColor: theme.palette.background.paper,
+    },
 }));
 
-const Post = (props) => {
+const Post = ({ post, like, comments, getComments, loadComments }) => {
 
   const classes = useStyles()
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
 
-  const handleExpandClick = () => {
+  const handleExpandClick = (id) => {
       setExpanded(!expanded)
+      getComments(id)  
   }
-
-  const { post } = props
 
   return (
     <>
@@ -79,7 +83,7 @@ const Post = (props) => {
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
+        <IconButton aria-label="add to favorites" onClick={like.bind(this, post.id)}>
           { post.like
             ? <FavoriteIcon />
             : <FavoriteBorderIcon />
@@ -90,7 +94,7 @@ const Post = (props) => {
           className={clsx(classes.expand, {
             [classes.expandOpen]: expanded,
           })}
-          onClick={handleExpandClick}
+          onClick={handleExpandClick.bind(this, post.id)}
           aria-expanded={expanded}
           aria-label="show more"
         >
@@ -98,22 +102,16 @@ const Post = (props) => {
           <ExpandMoreIcon />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>
-            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-            minutes.
-          </Typography>
-          <Typography paragraph>
-            Heat oil
-          </Typography>
-
-          <Typography>
-            Set aside off of the heat to let rest for 10 minutes, and then serve.
-          </Typography>
-        </CardContent>
-      </Collapse>
+      
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <div className={classes.demo}>
+            <List>
+              { loadComments && <><ListLoad /><ListLoad /><ListLoad /></> }
+              { comments.map(comment => <Comment key={comment.id} comment={comment} />) }
+            </List>
+          </div>
+        </Collapse>
+      
     </Card>
     </>
   )
